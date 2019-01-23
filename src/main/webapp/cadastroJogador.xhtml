@@ -1,0 +1,63 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+
+</h:head>
+<h:form id="formId">
+
+	<h:body>
+
+
+		<h1>Cadastro</h1>
+
+
+		<p:fieldset legend="Jogador" style="margin-bottom:20px">
+			<p:panelGrid id="panelCadastro">
+				<p:growl id="growl" showDetail="true" sticky="true" />
+
+				<p:panelGrid columns="3">
+
+					<p:outputLabel for="nomeId" value="Nome:" />
+					<p:outputLabel for="emailId" value="E-mail" />
+					<p:outputLabel for="telefoneId" value="Telefone:" />
+
+					<p:inputText id="nomeId" value="#{cadastroJogadorMB.jogador.nome}"
+						required="#{not empty param['formId:cadastrar']}" />
+					<p:inputText id="emailId"
+						value="#{cadastroJogadorMB.jogador.email}"
+						required="#{not empty param['formId:cadastrar']}" />
+					<p:inputMask id="telefoneId" required="#{not empty param['formId:cadastrar']}" value="#{cadastroJogadorMB.jogador.telefone}" mask="(99) 9999-9999"/>
+
+				</p:panelGrid>
+
+				<br> </br>
+
+				<p:panelGrid>
+					<p:outputLabel for="grupoId" value="Quero ser do grupo:" />
+					<p:selectOneRadio id="grupoId"
+						value="#{cadastroJogadorMB.jogador.grupo}">
+						<f:selectItem itemLabel="Vingadores" itemValue="Vingadores" />
+						<f:selectItem itemLabel="Liga da Justiça"
+							itemValue="Liga da Justiça" />
+					</p:selectOneRadio>
+
+				</p:panelGrid>
+
+				<br> </br>
+
+				<p:panelGrid columns="2" styleClass="ui-panelgrid-blank">
+					<h:commandButton id="cadastrar"
+						actionListener="#{cadastroJogadorMB.cadastrar}" value="Cadastrar"
+						update="panelCadastro" />
+					<h:commandButton id="listar"
+						action="#{cadastroJogadorMB.consulta()}" value="Listar Jogadores" />
+				</p:panelGrid>
+
+			</p:panelGrid>
+		</p:fieldset>
+	</h:body>
+</h:form>
+</html>

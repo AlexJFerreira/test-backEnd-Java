@@ -1,0 +1,126 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+
+</h:head>
+<h:form id="formId">
+
+	<h:body>
+
+		<h1>Jogadores Cadastrados</h1>
+
+		<h:panelGrid>
+			<p:dataTable var="jogadorVar" tableStyle="table-layout: auto;"
+				style="text-align:center;" value="#{consultaJogadoresMB.jogadores}">
+
+				<p:column headerText="Nome">
+					<h:outputText value="#{jogadorVar.nome}" />
+				</p:column>
+
+				<p:column headerText="E-mail">
+					<h:outputText value="#{jogadorVar.email}" />
+				</p:column>
+
+
+				<p:column headerText="Telefone">
+					<h:outputText value="#{jogadorVar.telefone}" />
+				</p:column>
+
+
+				<p:column headerText="Codinome">
+					<h:outputText value="#{jogadorVar.codinome}" />
+				</p:column>
+
+				<p:column headerText="Grupo">
+					<h:outputText value="#{jogadorVar.grupo}" />
+				</p:column>
+
+				<p:column styleClass="TexAlCenter">
+					<f:facet name="header">
+						<h:outputText value="Editar" />
+					</f:facet>
+					<p:commandLink oncomplete="PF('editarDialog').show();"
+						update="formId"
+						actionListener="#{consultaJogadoresMB.editaJogador(jogadorVar)}">
+						<i class="fa fa-pencil-square-o blue" />
+					</p:commandLink>
+				</p:column>
+
+				<p:column styleClass="TexAlCenter">
+					<f:facet name="header">
+						<h:outputText value="Excluir" />
+					</f:facet>
+					<p:commandLink
+						action="#{consultaJogadoresMB.excluirJogador(jogadorVar)}"
+						update="dlgJogador" ajax="false">
+						<i class="fa fa-close" />
+
+					</p:commandLink>
+				</p:column>
+
+			</p:dataTable>
+		</h:panelGrid>
+
+		<p:panelGrid columns="2" styleClass="ui-panelgrid-blank">
+			<h:commandButton action="#{consultaJogadoresMB.cadastrar}"
+				value="Novo Jogador" />
+
+		</p:panelGrid>
+
+
+
+	</h:body>
+</h:form>
+
+<p:dialog header="Jogador" id="dlgJogador" width="400"
+	widgetVar="editarDialog" styleClass="ui-fluid" modal="true"
+	dynamic="true">
+
+	<h:form id="jogadorDialogForm">
+
+		<p:panelGrid columns="2" layout="grid" id="pgAddExpressoes"
+			styleClass="ui-panelgrid-blank ui-fluid">
+
+			<p:outputLabel value="Nome:" />
+			<p:inputText value="#{consultaJogadoresMB.jogadorEdicao.nome}" />
+
+			<p:outputLabel value="E-mail:" />
+			<p:inputText value="#{consultaJogadoresMB.jogadorEdicao.email}" />
+
+			<p:outputLabel value="Telefone:" />
+			<p:inputText value="#{consultaJogadoresMB.jogadorEdicao.telefone}" />
+
+			<p:outputLabel value="Grupo:" />
+			<p:inputText value="#{consultaJogadoresMB.jogadorEdicao.grupo}"
+				disabled="true" />
+
+			<p:outputLabel value="Codinome:" />
+			<p:inputText value="#{consultaJogadoresMB.jogadorEdicao.codinome}"
+				disabled="true" />
+
+
+		</p:panelGrid>
+
+		<p:panelGrid styleClass="ui-panelgrid-blank ui-fluid" columns="2"
+			layout="grid">
+
+			<p:commandButton id="btSalvarExpressao" value="Salvar"
+				style="width:130px;" icon="fa fa-check Fs16 white"
+				styleClass="GreenButton Fleft"
+				oncomplete="PF('editarDialog').hide()" ajax="false"
+				action="#{consultaJogadoresMB.salvarEdicao()}"
+				update="form:expressoesDataTable" />
+
+			<p:commandButton id="btCancelar" value="Cancelar"
+				style="width:130px;" icon="fa fa-close Fs16 white"
+				styleClass="Fleft" oncomplete="PF('editarDialog').hide()" />
+
+		</p:panelGrid>
+
+	</h:form>
+
+</p:dialog>
+</html>
